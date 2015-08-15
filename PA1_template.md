@@ -1,10 +1,6 @@
----
-title: "PA1_template.Rmd"
-author: "Karen"
-date: "Sunday, July 19, 2015"
-output: html_document
----
-This is Assignment 1 for the Reproducible Research Course.
+# PA1_template.Rmd
+Karen  
+Assignment 1 - Reproducible Research 
 
 This assignment makes use of data from a personal activity monitoring device. This device collects data at 5 minute intervals through out the day. The data consists of two months of data from an anonymous individual collected during the months of October and November, 2012 and include the number of steps taken in 5 minute intervals each day.
 
@@ -40,7 +36,12 @@ StepsDays<-ddply(Activity,.(date),summarize,TotalSteps=sum(steps,na.rm = TRUE))
 
  
 Here is a histogram of total number of steps taken per day. 
-![plot of chunk unnamed-chunk-2](figure/unnamed-chunk-2-1.png) 
+
+```r
+hist(StepsDays$TotalSteps,main = "Total Number of Steps",xlab = "Total Steps per Day")
+```
+
+![](PA1_template_files/figure-html/unnamed-chunk-2-1.png) 
 
 Here is Calculations for the mean and Median of total number of steps taken per day.
 
@@ -102,7 +103,12 @@ library(ggplot2)
 ## Warning: package 'ggplot2' was built under R version 3.1.3
 ```
 Here is a time series plot with 5 mins intervals of the average number of steps taken 
-![plot of chunk unnamed-chunk-6](figure/unnamed-chunk-6-1.png) 
+
+```r
+ggplot(IntvlAvg, aes(interval,mean)) + geom_line() + xlab("") + ylab("Average steps per time interval")
+```
+
+![](PA1_template_files/figure-html/unnamed-chunk-6-1.png) 
 
 
 Here is getting the 5 min interval with the average maximum steps
@@ -113,13 +119,13 @@ Here is getting the 5 min interval with the average maximum steps
 
 SortAvg <- arrange(IntvlAvg, desc(mean))
 
-MaxAvg <- SortAvg[1,2]
+MaxAvg <- SortAvg[1,1]
 
 ReportMaxAvg <- cat("The interval with max steps = ", MaxAvg)
 ```
 
 ```
-## The interval with max steps =  206.1698
+## The interval with max steps =  835
 ```
 
 ```r
@@ -175,7 +181,12 @@ Activity2 <- arrange(CompActv, date)
 StepsDays2<-ddply(Activity2,.(date),summarize,TotalSteps=sum(steps))
 ```
 Here is a histogram of total number of steps taken per day (NAs were replaced with averages)
-![plot of chunk unnamed-chunk-10](figure/unnamed-chunk-10-1.png) 
+
+```r
+hist(StepsDays2$TotalSteps,main = "Total Number of Steps - NA replaced",xlab = "Total Steps per Day")
+```
+
+![](PA1_template_files/figure-html/unnamed-chunk-10-1.png) 
 
 Here is Calculations for the mean and Median of total number of steps taken per day. (NAs were replaced with averages)
 
@@ -252,5 +263,14 @@ IntvlAvgWk <-ddply(Activity2,.(interval, PartWeek),summarize,mean=mean(steps,na.
 IntvlAvgWk$PartWeek <- as.factor(IntvlAvgWk$PartWeek)
 ```
 Here is a panel plot of the 5 minute interval and the average number of steps taken. (NAs were replaced with averages)
-![plot of chunk unnamed-chunk-14](figure/unnamed-chunk-14-1.png) 
+
+```r
+g <- ggplot(data=IntvlAvgWk, aes(x=interval, y=mean))
+
+gf <- g + geom_line() + facet_grid(PartWeek ~ . ) + labs(labs(x = "Intervals", y = "Number of steps"))
+
+gf
+```
+
+![](PA1_template_files/figure-html/unnamed-chunk-14-1.png) 
 
