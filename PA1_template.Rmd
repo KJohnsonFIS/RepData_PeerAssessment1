@@ -1,10 +1,9 @@
 ---
 title: "PA1_template.Rmd"
 author: "Karen"
-date: "Sunday, July 19, 2015"
 output: html_document
 ---
-This is Assignment 1 for the Reproducible Research Course.
+Assignment 1 - Reproducible Research 
 
 This assignment makes use of data from a personal activity monitoring device. This device collects data at 5 minute intervals through out the day. The data consists of two months of data from an anonymous individual collected during the months of October and November, 2012 and include the number of steps taken in 5 minute intervals each day.
 
@@ -35,7 +34,7 @@ StepsDays<-ddply(Activity,.(date),summarize,TotalSteps=sum(steps,na.rm = TRUE))
 
  
 Here is a histogram of total number of steps taken per day. 
-```{r, echo=FALSE}
+```{r, echo=TRUE}
 hist(StepsDays$TotalSteps,main = "Total Number of Steps",xlab = "Total Steps per Day")
 
 ```
@@ -75,7 +74,7 @@ library(ggplot2)
 
 ```
 Here is a time series plot with 5 mins intervals of the average number of steps taken 
-```{r, echo=FALSE}
+```{r, echo=TRUE}
 ggplot(IntvlAvg, aes(interval,mean)) + geom_line() + xlab("") + ylab("Average steps per time interval")
 ```
 
@@ -87,7 +86,7 @@ Here is getting the 5 min interval with the average maximum steps
 
 SortAvg <- arrange(IntvlAvg, desc(mean))
 
-MaxAvg <- SortAvg[1,2]
+MaxAvg <- SortAvg[1,1]
 
 ReportMaxAvg <- cat("The interval with max steps = ", MaxAvg)
 
@@ -137,7 +136,7 @@ StepsDays2<-ddply(Activity2,.(date),summarize,TotalSteps=sum(steps))
 
 ```
 Here is a histogram of total number of steps taken per day (NAs were replaced with averages)
-```{r, echo=FALSE}
+```{r, echo=TRUE}
 hist(StepsDays2$TotalSteps,main = "Total Number of Steps - NA replaced",xlab = "Total Steps per Day")
 ```
 
@@ -193,7 +192,7 @@ IntvlAvgWk$PartWeek <- as.factor(IntvlAvgWk$PartWeek)
 
 ```
 Here is a panel plot of the 5 minute interval and the average number of steps taken. (NAs were replaced with averages)
-```{r, echo=FALSE}
+```{r, echo=TRUE}
 
 g <- ggplot(data=IntvlAvgWk, aes(x=interval, y=mean))
 
